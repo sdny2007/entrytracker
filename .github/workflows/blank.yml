@@ -24,7 +24,8 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-
+      - name: check env
+        run: echo - echo "The production secret is ${{ MYSQL_DATABASE }}"
       - name: Run docker file
         run: docker compose up -d
       - name: wait 60 seconds
