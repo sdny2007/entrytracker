@@ -1,0 +1,33 @@
+services:
+  app:
+    build: .
+    container_name: entrytracker-app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
+    networks:
+      - entrytracker
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    environment:
+      - MYSQL_DATABASE=app_db
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - "3306:3306"
+    networks:
+      - entrytracker
+    volumes:
+      - db-data:/var/lib/mysql
+
+networks:
+  entrytracker:
+
+volumes:
+  db-data:
+  
+  
+  
+  
