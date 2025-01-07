@@ -28,7 +28,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Download a docker agent
         run: |
-            sudo apt-get update -y
+            sudo apt-get update 
             # Add Docker's official GPG key:
               sudo apt-get update
               sudo apt-get install ca-certificates curl
