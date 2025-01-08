@@ -30,7 +30,7 @@ jobs:
         run:  pip install -r ./entryTracker/requirements.txt
       - name: run appliation
         run: |
-              python3 ./entryTracker/app.py
+              python3 ./entryTracker/app.py &
       - name: curl
         run: curl http://localhost:5000
 
