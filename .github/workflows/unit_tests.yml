@@ -30,4 +30,7 @@ jobs:
         run:  python3 ./entryTracker/app.py &
       - name: Application check 
         run: curl http://localhost:5000
+        
+      - name: Call next Workflow
+        uses: ./.github/workflows/shay.yml        
 
