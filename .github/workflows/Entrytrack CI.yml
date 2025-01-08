@@ -62,11 +62,16 @@ jobs:
         run: curl -XGET http://localhost:5000
       # Push the Image to AWS repository
       - name: Connect to ECR
-        uses: aws-actions/amazon-ecr-login@v1
+      
+        uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
+          
+      - name: Login to ECR
+        uses: aws-actions/amazon-ecr-login@v1
+          
       - name: Tag and Push Docker image
         run: | 
              aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 886436956602.dkr.ecr.ap-south-1.amazonaws.com
