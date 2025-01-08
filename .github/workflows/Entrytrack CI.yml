@@ -1,0 +1,63 @@
+name: Entrytrack CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  job1:
+    # This workflow contains a single job called "build"
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+      
+      # Install Runner updates
+      - name: Install updates
+        run: sudo apt-get update -y
+
+      # Install Flask and pymysql
+      - name: Install Flask and pymysql
+        run: pip install -r ./entryTracker/requirements.txt
+        
+      # Run application on Backround
+      - name: Run application
+        run: python3 ./entryTracker/app.py &
+        
+      # Check if application is up
+      - name: Application check
+        run: curl http://localhost:5000
+
+  job2:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    
+    # Set environment variables using secrets
+    env:
+      MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+      MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Run Docker Compose
+      - name: Run docker file
+        run: docker compose up -d
+        
+      # Wait 30 seconds for the application to start
+      - name: Wait 30 seconds
+        run: sleep 30
+        
+      # Check if application and database is up
+      - name: Check
+        run: curl -XGET http://localhost:5000
+        
