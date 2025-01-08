@@ -24,13 +24,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: install updates
         run:  sudo apt-get update -y 
-      - name: install python
-        run:  sudo apt install python3.10 -y           
+      #- name: install python
+      #  run:  sudo apt install python3.10 -y           
       - name: ls -l
         run:  pip install -r ./entryTracker/requirements.txt
       - name: run appliation
         run: |
-              python3 my_file.py
+              python3 ./entryTracker/app.py
       - name: curl
         run: curl http://localhost:5000
 
