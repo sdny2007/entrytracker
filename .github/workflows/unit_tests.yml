@@ -21,7 +21,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
       #install Runner updates
-      - name: install updates
+      - name: install updates -y
         run:  sudo apt-get update 
        
       - name: Install Flask and pymysql
