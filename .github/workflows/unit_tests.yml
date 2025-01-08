@@ -1,12 +1,10 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: "unit_tests"
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -22,15 +20,14 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
+      #install Runner updates
       - name: install updates
         run:  sudo apt-get update -y 
-      #- name: install python
-      #  run:  sudo apt install python3.10 -y           
-      - name: ls -l
+       
+      - name: Install Flask and pymysql
         run:  pip install -r ./entryTracker/requirements.txt
-      - name: run appliation
-        run: |
-              python3 ./entryTracker/app.py &
-      - name: curl
+      - name: run application
+        run:  python3 ./entryTracker/app.py &
+      - name: Application check 
         run: curl http://localhost:5000
 
