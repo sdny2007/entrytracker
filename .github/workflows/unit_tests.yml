@@ -18,10 +18,14 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
+      - name: install updates
+        run:  sudo apt-get update -y 
+      - name: install python
+        run:  sudo apt install python3.10 -y           
       - name: ls -l
         run:  pip install -r ./entryTracker/requirements.txt
       - name: run appliation
