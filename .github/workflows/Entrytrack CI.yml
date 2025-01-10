@@ -30,11 +30,7 @@ jobs:
       # Run application on Backround
       - name: Run application
         run: python3 ./entryTracker/app.py &
-        
-      # Wait 15 seconds for the application to start
-      - name: Wait 15 seconds
-        run: sleep 15   
-        
+                
       # Check if application is up
       - name: Application check
         run: curl http://localhost:5000
