@@ -28,8 +28,7 @@ networks:
   entrytracker:
     name: entrytracker
 
-volumes:
-  db-data:
+
   
   
   
