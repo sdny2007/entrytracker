@@ -20,10 +20,15 @@ services:
       - "3306:3306"
     networks:
       - entrytracker
+    volumes:
+      - db-data:/var/lib/mysql      
       
 networks:
   entrytracker:
     name: entrytracker
+
+volumes:
+  db-data:    
 
 
   
