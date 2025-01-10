@@ -31,9 +31,9 @@ jobs:
       - name: Run application
         run: python3 ./entryTracker/app.py &
         
-      # Wait 30 seconds for the application to start
-      - name: Wait 30 seconds
-        run: sleep 30   
+      # Wait 15 seconds for the application to start
+      - name: Wait 15 seconds
+        run: sleep 15   
         
       # Check if application is up
       - name: Application check
@@ -57,9 +57,9 @@ jobs:
       - name: Run docker compose file
         run: docker compose up -d
         
-      # Wait 30 seconds for the application to start
-      - name: Wait 30 seconds
-        run: sleep 30
+      # Wait 15 seconds for the application to start
+      - name: Wait 15 seconds
+        run: sleep 15
         
       # Check if application and database is up
       - name: Check
