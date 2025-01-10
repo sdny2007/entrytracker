@@ -31,6 +31,10 @@ jobs:
       - name: Run application
         run: python3 ./entryTracker/app.py &
         
+      # Wait 30 seconds for the application to start
+      - name: Wait 30 seconds
+        run: sleep 30   
+        
       # Check if application is up
       - name: Application check
         run: curl http://localhost:5000
