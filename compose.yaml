@@ -17,8 +17,10 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     ports:
       - "3306:3306"
-    networks:
-      - entrytracker
+networks:
+  entrytracker:
+    name: entrytracker
+
     volumes:
       - db-data:/var/lib/mysql
 
