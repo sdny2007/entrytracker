@@ -9,7 +9,7 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# CI
 jobs:
   job1:
     # This workflow contains a single job called "build"
@@ -56,28 +56,24 @@ jobs:
       - name: Wait 15 seconds
         run: sleep 15
         
-      # Check if application and database is up
+      # Check if application, database and nginx is up
       - name: Check
         run: curl -XGET http://localhost:80
-      # Push the Image to AWS repository
+        
+      # Connect to ECR via access key
       - name: Connect to ECR
-      
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
-          
-    #  - name: Login to ECR
-     #   id: login-ecr      
-      #  uses: aws-actions/amazon-ecr-login@v2
-          
+      #  Push the app Image to ECR          
       - name: Tag and Push Docker image
         run: | 
              aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 886436956602.dkr.ecr.ap-south-1.amazonaws.com
              docker tag entrytracker-app:latest 886436956602.dkr.ecr.ap-south-1.amazonaws.com/entrytracker/app:latest
              docker push 886436956602.dkr.ecr.ap-south-1.amazonaws.com/entrytracker/app:latest
-
+      #CD
   job3:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -88,13 +84,13 @@ jobs:
     steps:
       # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-      # Connect to EC2
+      # Connect to EC2 via SSH and resrart docker compose with new version
       - name: Set up SSH and Connect to EC2
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.MY_SECRET_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@ec2-13-201-63-105.ap-south-1.compute.amazonaws.com << EOF
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@ec2-13-201-63-105.ap-south-1.compute.amazonaws.com << EOF   
           cd /opt/entrytracker
           sudo docker compose down
           sudo docker compose up -d
