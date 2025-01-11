@@ -58,7 +58,7 @@ jobs:
         
       # Check if application and database is up
       - name: Check
-        run: curl -XGET http://localhost:5000
+        run: curl -XGET http://localhost:80
       # Push the Image to AWS repository
       - name: Connect to ECR
       
