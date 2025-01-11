@@ -71,8 +71,11 @@ jobs:
       - name: Tag and Push Docker image
         run: | 
              aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 886436956602.dkr.ecr.ap-south-1.amazonaws.com
-             docker tag entrytracker-app:latest 886436956602.dkr.ecr.ap-south-1.amazonaws.com/entrytracker/app:latest
-             docker push 886436956602.dkr.ecr.ap-south-1.amazonaws.com/entrytracker/app:latest
+             IMAGE_NAME=entrytracker/app
+             REPOSITORY_URI=886436956602.dkr.ecr.ap-south-1.amazonaws.com/$IMAGE_NAME
+             VERSION=$(date +%Y%m%d%H%M%S)-${GITHUB_SHA:0:7}
+             docker tag entrytracker-app:latest 886436956602.dkr.ecr.ap-south-1.amazonaws.com/entrytracker/app:$VERSION
+             docker push 886436956602.dkr.ecr.ap-south-1.amazonaws.com/entrytracker/app:$VERSION
       #CD
   job3:
     # The type of runner that the job will run on
