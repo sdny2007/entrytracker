@@ -1,5 +1,5 @@
-name: Entrytrack CI
-
+name: Entrytrack CI/CD
+#CI
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
@@ -12,7 +12,7 @@ on:
 # CI
 jobs:
   job1:
-    name: Unit Test
+    name: CI - Unit Test
     # This workflow contains a single job called "build"
     runs-on: ubuntu-latest
     
@@ -37,7 +37,7 @@ jobs:
         run: curl http://localhost:5000
 
   job2:
-    name: E2E  
+    name: CI - E2E  
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     needs: job1
@@ -78,7 +78,7 @@ jobs:
              docker push 886436956602.dkr.ecr.ap-south-1.amazonaws.com/entrytracker/app:$VERSION
       #CD
   job3:
-    name: Deployment to the project
+    name: CD - Deployment to the Project
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     needs:
