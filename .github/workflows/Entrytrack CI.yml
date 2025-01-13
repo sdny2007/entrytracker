@@ -55,8 +55,8 @@ jobs:
         run: docker compose up -d
         
       # Wait 15 seconds for the application to start
-      - name: Wait 15 seconds
-        run: sleep 15
+      - name: Wait 10 seconds
+        run: sleep 10
         
       # Check if application, database and nginx is up
       - name: Check
